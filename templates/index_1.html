@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breast Cancer Prediction</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #9face6);
+            color: #333;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        input[type="number"] {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="number"]:focus {
+            border-color: #6c63ff;
+            box-shadow: 0 0 5px rgba(108, 99, 255, 0.3);
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px;
+            background: #6c63ff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background: #574bcd;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            background: #333;
+        }
+
+        .result.success {
+            background: #28a745;
+        }
+
+        .result.error {
+            background: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Breast Cancer Prediction</h1>
+        <form action="/predict" method="POST">
+            <label for="mean_radius">Mean Radius</label>
+            <input type="number" step="0.01" name="mean_radius" required>
+
+            <label for="mean_texture">Mean Texture</label>
+            <input type="number" step="0.01" name="mean_texture" required>
+
+            <label for="mean_perimeter">Mean Perimeter</label>
+            <input type="number" step="0.01" name="mean_perimeter" required>
+
+            <label for="mean_area">Mean Area</label>
+            <input type="number" step="0.01" name="mean_area" required>
+
+            <label for="area_error">Area Error</label>
+            <input type="number" step="0.01" name="area_error" required>
+
+            <label for="worst_texture">Worst Texture</label>
+            <input type="number" step="0.01" name="worst_texture" required>
+
+            <label for="worst_perimeter">Worst Perimeter</label>
+            <input type="number" step="0.01" name="worst_perimeter" required>
+
+            <label for="worst_area">Worst Area</label>
+            <input type="number" step="0.01" name="worst_area" required>
+
+            <button type="submit">Predict Cancer Type</button>
+        </form>
+
+        {% if prediction %}
+            <div class="result {{ 'success' if 'Benign' in prediction else 'error' }}">
+                {{ prediction }}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
